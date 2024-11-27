@@ -40,7 +40,7 @@
 		<!--**********************************
             Sidebar start
         ***********************************-->
-		<div th:replace="/dashboard/fragments/sidebar::sidebar"></div>
+		<div th:replace="/dashboard/fragments/sidebarSuperAdmin::sidebar"></div>
 		<!--**********************************
             Sidebar end
         ***********************************-->
@@ -53,7 +53,33 @@
 			<div class="container-fluid mt-3">
 				<!--				<div th:replace="/dashboard/fragments/kpi::kpi"></div>-->
 
-				<h1 align="center" style="color: rgb(128, 128, 128); padding-bottom: 150px;">Comming soon</h1>
+				<div class="card">
+
+					<div class="card-body">
+
+						<h4 class="card-title">Informations de l'utilisateur authentifié</h4>
+
+						<div class="card-body">
+							<p class="mb-2"><strong>Nom de l'utilisateur :</strong> <span
+									sec:authentication="name"></span></p>
+							<p class="mb-2"><strong>Username :</strong> <span
+									sec:authentication="principal.username"></span>
+							</p>
+							<p class="mb-2"><strong>Utilisateur activé :</strong> <span
+									sec:authentication="principal.enabled"></span></p>
+							<p class="mb-2"><strong>Rôles (authorities) :</strong> <span
+									sec:authentication="authorities"></span>
+							</p>
+							<p class="mb-2"><strong>Adresse IP :</strong> <span
+									sec:authentication="details.remoteAddress"></span>
+							</p>
+
+
+						</div>
+
+					</div>
+
+				</div>
 
 				<!-- #/ container -->
 			</div>

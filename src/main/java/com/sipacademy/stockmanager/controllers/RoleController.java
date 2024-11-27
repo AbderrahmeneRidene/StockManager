@@ -48,7 +48,7 @@ public class RoleController {
 
 	@GetMapping("/listUserRole")
 	public String listUserRole(Model model) {
-		List<User> users = userService.listUsers("ALL");
+		List<User> users = userService.listUsers("WithoutSUPERADMIN");
 		long nbr = users.size();
 		if (users.size() == 0)
 			users = null;
@@ -82,8 +82,8 @@ public class RoleController {
 	@PostMapping("updateRole")
 	// @ResponseBody
 	public String UpdateUserRole(@RequestParam("id") int id, @RequestParam("newrole") String newRole, Model model) {
-		userService.updateRole(id, newRole);
-		model.addAttribute("users", userService.listUsers("ALL"));
+		if (newRole.equals("ADMIN")||newRole.equals("AGENT")) userService.updateRole(id, newRole);
+		model.addAttribute("users", userService.listUsers("WithoutSUPERADMIN"));
 		return "dashboard/superAdmin/listUserRole";
 	}
 
@@ -92,14 +92,14 @@ public class RoleController {
 
 		List<User> users;
 		if (nameSearched != null && !nameSearched.isEmpty())
-			users = ((List<User>) userService.listUsers("ALL")).stream()
+			users = ((List<User>) userService.listUsers("WithoutSUPERADMIN")).stream()
 					.filter(user -> user.getEmail().toLowerCase().contains(nameSearched)
 							|| user.getName().toLowerCase().contains(nameSearched)
 							|| user.getLastName().toLowerCase().contains(nameSearched)
 							|| user.getId() == safeParseInt(nameSearched, 0))
 					.collect(Collectors.toList());
 		else
-			users = (List<User>) userService.listUsers("ALL");
+			users = (List<User>) userService.listUsers("WithoutSUPERADMIN");
 		model.addAttribute("users", users);
 
 		return "dashboard/superAdmin/listUserRole";

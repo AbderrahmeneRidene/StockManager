@@ -26,13 +26,13 @@ import jakarta.servlet.http.HttpSession;
 import com.sipacademy.stockmanager.entities.User;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/")
 public class CrudAdminController {
 
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/list")
+	@GetMapping("list")
 	public String listUsers(Model model) {
 
 		List<User> users = (List<User>) userService.listUsers("ADMIN");
@@ -44,13 +44,13 @@ public class CrudAdminController {
 		return "dashboard/superAdmin/listAdmin";
 	}
 
-	@RequestMapping("/add")
+	@RequestMapping("add")
 	public String addAdminForm(Model model) {
 		model.addAttribute("user", new User());
 		return "/dashboard/superAdmin/addAdmin";
 	}
 
-	@RequestMapping("/save")
+	@RequestMapping("save")
 	public String Register(@ModelAttribute("user") User user, BindingResult bindingResult,
 			@RequestParam("files") MultipartFile[] files) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -100,7 +100,7 @@ public class CrudAdminController {
 		return "dashboard/superAdmin/listAdmin";
 	}
 
-	@GetMapping("/edit/{id}")
+	@GetMapping("edit/{id}")
 	public String showUserFormToUpdate(@PathVariable int id, Model model) {
 		// Logique pour récupérer l'utilisateur par son ID et le passer au modèle
 		User user = userService.findUserById(id);
@@ -108,7 +108,7 @@ public class CrudAdminController {
 		return "/dashboard/superAdmin/editAdmin"; // Retourne la vue d'édition de l'utilisateur
 	}
 
-	@PostMapping("/edit/{id}")
+	@PostMapping("edit/{id}")
 	public String updateUser(
 	        @PathVariable int id,
 	        @ModelAttribute("user") User user,

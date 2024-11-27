@@ -40,7 +40,7 @@
 		<!--**********************************
             Header start
         ***********************************-->
-		<div th:replace="/dashboard/fragments/header::header"></div>
+		<div th:replace="/dashboard/fragments/headerCrudSuperAdmin::header"></div>
 		<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -48,7 +48,7 @@
 		<!--**********************************
             Sidebar start
         ***********************************-->
-		<div th:replace="/dashboard/fragments/sidebarSuperAdmin::sidebar"></div>
+		<div th:replace="/dashboard/fragments/sidebarCrudSuperAdmin::sidebar"></div>
 		<!--**********************************
             Sidebar end
         ***********************************-->
@@ -66,70 +66,80 @@
 				<div th:switch="${users}" class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h2 th:case="null" align="center" style="color: grey">No Admins yet!</h2>
-							<div th:case="*">
-								<div class="container">
-									<div class="row">
-										<form class="form-inline my-2 my-lg-0" th:action="@{/admin/searchByAnything}"
-											method="get">
-											<input class="form-control mr-sm-2" type="text"
-												placeholder="Search by anything" aria-label="Search"
-												name="nameSearched">
-											<button class="btn btn-outline-success my-2 my-sm-0"
-												type="submit">Search</button>
-										</form>
-									</div>
+							<div class="container">
+								<div class="row">
+									<form class="form-inline my-2 my-lg-0" th:action="@{/role/searchByAnything}"
+										method="get">
+										<input class="form-control mr-sm-2" type="text" placeholder="Search by anything"
+											aria-label="Search" name="nameSearched">
+										<button class="btn btn-outline-success my-2 my-sm-0"
+											type="submit">Search</button>
+									</form>
 								</div>
+							</div>
 
-								<div class="active-member">
-									<div class="table-responsive">
-										<table class="table table-xs mb-0">
-											<thead>
-												<tr>
-													<th>Picture</th>
-													<th>ID</th>
-													<th>Name</th>
-													<th>Lastname</th>
-													<th>Email</th>
-													<th>Edit</th>
-													<th>Role</th>
-													<th>Active</th>
-													<th></th>
-													<th></th>
+							<div class="active-member">
+								<div class="table-responsive">
+									<table class="table table-xs mb-0">
+										<thead>
+											<tr>
+												<th>Picture</th>
+												<th>ID</th>
+												<th>Name & LastName</th>
+
+												<th>Role</th>
+												<th>Update Role</th>
+												<th>Active</th>
 
 
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:each="user : ${users}">
-													<td><img th:src="@{'/uploads/' + ${user.picture}}"
-															th:alt="'Photo de ' + ${user.name}"
-															class="user-photo rounded-circle" data-bs-toggle="modal"
-															data-bs-target="#photoModal" style="border :1px solid #ccc;"
-															th:attr="data-bs-photo-url=@{'/uploads/' + ${user.picture}}, data-bs-user-name=${user.name}" />
-													</td>
-													<td th:text="${user.id}"></td>
-													<td th:text="${user.name}"></td>
-													<td th:text="${user.lastName}"></td>
-													<td th:text="${user.email}"></td>
-													<td><a th:href="@{/admin/edit/{id}(id=${user.id})}"><i
-																class="fa fa-edit"></i></a></td>
-													<td th:text="${user.roles[0].role}"></td>
-													<td th:text="${user.active}"></td>
-													<td><a
-															th:href="@{/admin/enable/{id}/{email} (id=${user.id}, email=${user.email})}">Activer</a>
-													</td>
-													<td><a
-															th:href="@{/admin/disable/{id}/{email} (id=${user.id}, email=${user.email})}">Désactiver</a>
-													</td>
 
 
-												</tr>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="user : ${users}">
+												<td><img th:src="@{'/uploads/' + ${user.picture}}"
+														th:alt="'Photo de ' + ${user.name}"
+														class="user-photo rounded-circle" data-bs-toggle="modal"
+														data-bs-target="#photoModal" style="border :1px solid #ccc;"
+														th:attr="data-bs-photo-url=@{'/uploads/' + ${user.picture}}, data-bs-user-name=${user.name}" />
+												</td>
+												<td th:text="${user.id}"></td>
+												<td th:text="${user.name}+' '+${user.lastName}"></td>
 
-											</tbody>
-										</table>
 
-									</div>
+												<td th:text="${user.roles[0].role}"></td>
+												<td>
+													<form method="post" th:action="@{/superAdmin/updateRole}">
+														<div class="row">
+															<div class="col">
+																<select name="newrole" class="form-control">
+																	<option value="${user.roles[0].role}" ></option>
+																	<option value="AGENT">AGENT</option>
+																	<option value="ADMIN">ADMIN</option>
+																	<option value="SUPERADMIN">SUPERADMIN</option>
+																</select>
+															</div>
+															<div class="col">
+																<input type="hidden" name="id" th:value="${user.id}"
+																	th:attr="name='id'" />
+																<input class="btn btn-primary" type="submit"
+																	value="Update role" />
+															</div>
+														</div>
+
+													</form>
+												</td>
+												<td th:text="${user.active}"></td>
+
+
+
+
+											</tr>
+
+										</tbody>
+									</table>
+
 								</div>
 							</div>
 						</div>

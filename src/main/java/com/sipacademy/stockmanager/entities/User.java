@@ -2,6 +2,7 @@ package com.sipacademy.stockmanager.entities;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
@@ -48,7 +49,7 @@ public class User implements UserDetails{
 	@Column(name = "picture")
 	private String picture;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
@@ -118,8 +119,9 @@ public class User implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-		return (Collection<? extends GrantedAuthority>) this.getRoles();
+	    return roles.stream()
+	            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
+	            .toList();
 	}
 
 	@Override

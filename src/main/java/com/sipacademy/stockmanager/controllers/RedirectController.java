@@ -8,6 +8,7 @@ public class RedirectController {
 
     @GetMapping("/")
     public String redirectToHome() {
-        return "dashboard/superAdmin/home";
+        
+    	return "dashboard/superAdmin/home";
     }
 }

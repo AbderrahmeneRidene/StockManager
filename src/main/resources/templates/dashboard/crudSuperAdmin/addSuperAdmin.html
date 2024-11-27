@@ -32,7 +32,7 @@
 		<!--**********************************
             Header start
         ***********************************-->
-		<div th:replace="/dashboard/fragments/header::header"></div>
+		<div th:replace="/dashboard/fragments/headerCrudSuperAdmin::header"></div>
 		<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -40,7 +40,7 @@
 		<!--**********************************
             Sidebar start
         ***********************************-->
-		<div th:replace="/dashboard/fragments/sidebarSuperAdmin::sidebar"></div>
+		<div th:replace="/dashboard/fragments/sidebarCrudSuperAdmin::sidebar"></div>
 		<!--**********************************
             Sidebar end
         ***********************************-->
@@ -56,19 +56,39 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">Mise à jour d'un Agent</h4>
+							<h4 class="card-title">Ajouter nouvel super admin</h4>
 							<div class="basic-form">
-								<form th:action="@{/agent/edit/{id}(id=${user.id})}" th:method="POST" th:object="${user}"
+								<form th:action="@{/superAdmin/save}" th:method="POST" th:object="${user}"
 									enctype="multipart/form-data">
-									<div class="form-group">
-										<label for="inputGroupFile01">Old Picture</label>
-										<div>
-											<img th:src="@{'/uploads/' + *{picture}}"
-												style="max-width : 150px; max-height :150px;border :1px solid #ccc; border-radius :5px;">
+
+									<div class="form-row">
+
+										<div class="form-group col-md-6">
+											<label>Email</label>
+											<input type="email" th:field="*{email}" placeholder="Email"
+												class="form-control" />
+											<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+												style="color: red;" class="validation-message">
+											</label>
+										</div>
+										<div class="form-group col-md-6">
+											<label>Password</label>
+											<input th:field="*{password}" type="password" class="form-control"
+												placeholder="Password">
 										</div>
 									</div>
-									<div class="form-group">
-										<label for="inputGroupFile01">New Picture</label>
+									<div class="form-group mb-3">
+										<label>Name</label>
+										<input th:field="*{name}" type="text" class="form-control" placeholder="name">
+									</div>
+									<div class="form-group mb-3">
+										<label>Lastname</label>
+										<input th:field="*{lastName}" type="text" class="form-control"
+											placeholder="last name">
+									</div>
+
+									<div class="form-group mb-3">
+										<label for="inputGroupFile01">Picture</label>
 										<div class="custom-file">
 											<input type="file" class="custom-file-input" id="inputGroupFile01"
 												name="files" accept="image/*" onchange="handleFileSelection(this)">
@@ -79,32 +99,8 @@
 											<!-- Image preview will appear here -->
 										</div>
 									</div>
-									<div class="form-row">
-										<div class="form-group col-md-6">
-											<label>Name</label>
-											<input th:field="*{name}" type="text" class="form-control"
-												placeholder="name">
-										</div>
-										<div class="form-group col-md-6">
-											<label>Lastname</label>
-											<input th:field="*{lastName}" type="text" class="form-control"
-												placeholder="last name">
-										</div>
-									</div>
 
-
-									<div class="form-group">
-										<label>Email</label>
-										<input type="email" th:field="*{email}" placeholder="Email"
-											class="form-control" />
-										<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-											style="color: red;" class="validation-message">
-										</label>
-									</div>
-
-
-
-									<button type="submit" class="btn btn-dark">Enregistrer les modification</button>
+									<button type="submit" class="btn btn-dark">Créer admin</button>
 								</form>
 							</div>
 						</div>
@@ -114,28 +110,27 @@
 				</div>
 				<!-- #/ container -->
 			</div>
-		</div>
-		<!--**********************************
+			<!--**********************************
             Content body end
         ***********************************-->
 
 
-		<!--**********************************
+			<!--**********************************
             Footer start
         ***********************************-->
-		<div th:replace="/dashboard/fragments/footer::footer"></div>
-		<!--**********************************
+			<div th:replace="/dashboard/fragments/footer::footer"></div>
+			<!--**********************************
             Footer end
         ***********************************-->
-	</div>
-	<!--**********************************
+		</div>
+		<!--**********************************
         Main wrapper end
     ***********************************-->
 
-	<!--**********************************
+		<!--**********************************
         Scripts
     ***********************************-->
-	<div th:replace="/dashboard/fragments/jsscripts::jsscripts"></div>
+		<div th:replace="/dashboard/fragments/jsscripts::jsscripts"></div>
 
 </body>
 
@@ -167,8 +162,8 @@
 				const img = document.createElement("img");
 				img.src = e.target.result;
 				img.alt = "Image preview";
-				img.style.maxWidth = "150px";
-				img.style.maxHeight = "150px";
+				img.style.maxWidth = "200px";
+				img.style.maxHeight = "200px";
 				img.style.border = "1px solid #ccc";
 				img.style.borderRadius = "5px";
 				imageContainer.appendChild(img);

@@ -38,7 +38,12 @@ public class UserService {
 
 		if (role.equals("ALL"))
 			return (List<User>) userRepository.findAll();
-		else
+		else if (role.equals("WithoutSUPERADMIN")) {
+			return
+					(List<User>) userRepository.findAll().stream().filter(
+							user -> user.getRoles().stream().anyMatch(roleToCheck -> !"SUPERADMIN".equals(roleToCheck.getRole())))
+							.collect(Collectors.toList());
+		} else
 			return (List<User>) userRepository.findAll().stream().filter(
 					user -> user.getRoles().stream().anyMatch(roleToCheck -> role.equals(roleToCheck.getRole())))
 					.collect(Collectors.toList()); // lister tous les roles de la base
@@ -53,12 +58,12 @@ public class UserService {
 	}
 
 	public User findUserByEmail(String email) {
-		return userRepository.findByEmail(email);
+		return userRepository.findByEmail(email).orElse(null);
 	}
 
 	public void saveUsers(User user, MultipartFile newPicture, String role) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user.setActive(0);
+		if (role.equals("SUPERADMIN")) user.setActive(1); else user.setActive(0);
 		Role userRole = roleRepository.findByRole(role);
 		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		if (newPicture.isEmpty())

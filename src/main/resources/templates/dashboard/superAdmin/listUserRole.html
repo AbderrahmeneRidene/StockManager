@@ -48,7 +48,7 @@
 		<!--**********************************
             Sidebar start
         ***********************************-->
-		<div th:replace="/dashboard/fragments/sidebar::sidebar"></div>
+		<div th:replace="/dashboard/fragments/sidebarSuperAdmin::sidebar"></div>
 		<!--**********************************
             Sidebar end
         ***********************************-->
@@ -114,6 +114,7 @@
 														<div class="row">
 															<div class="col">
 																<select name="newrole" class="form-control">
+																	<option value="${user.roles[0].role}"></option>
 																	<option value="AGENT">AGENT</option>
 																	<option value="ADMIN">ADMIN</option>
 																</select>

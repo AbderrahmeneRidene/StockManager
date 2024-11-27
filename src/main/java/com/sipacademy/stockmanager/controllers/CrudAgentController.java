@@ -21,7 +21,7 @@ import com.sipacademy.stockmanager.entities.User;
 import com.sipacademy.stockmanager.services.UserService;
 
 @Controller
-@RequestMapping("/agent")
+@RequestMapping("/agent/")
 public class CrudAgentController {
 	
 	@Autowired

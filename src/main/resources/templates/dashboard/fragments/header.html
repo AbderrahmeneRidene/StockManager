@@ -4,7 +4,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>SIP Academy</title>
 	<!-- Favicon icon -->
-	<link rel="icon" type="image/png" sizes="16x16" th:href="@{/backoffice/images/favicon.png}">
+	<link rel="icon" type="image/png" sizes="16x16" th:src="@{/backoffice/images/logo.png}">
 	<!-- Pignose Calender -->
 	<link th:href="@{/backoffice/plugins/pg-calendar/css/pignose.calendar.min.css}" rel="stylesheet">
 	<!-- Chartist -->
@@ -40,7 +40,7 @@
 			<ul class="clearfix">
 				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
 						<i class="mdi mdi-email-outline"></i>
-						<span class="badge badge-pill gradient-1">3</span>
+						<span class="badge badge-pill gradient-1"></span>
 					</a>
 					<div class="drop-down animated fadeIn dropdown-menu">
 						<div class="dropdown-content-heading d-flex justify-content-between">
@@ -104,7 +104,7 @@
 				</li>
 				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
 						<i class="mdi mdi-bell-outline"></i>
-						<span class="badge badge-pill gradient-2">3</span>
+						<span class="badge badge-pill gradient-2"></span>
 					</a>
 					<div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
 						<div class="dropdown-content-heading d-flex justify-content-between">
@@ -173,10 +173,11 @@
 						</div>
 					</div>
 				</li>
+<!--				<span th:text="${username}"></span>-->
 				<li class="icons dropdown">
 					<div class="user-img c-pointer position-relative" data-toggle="dropdown">
 						<span class="activity active"></span>
-						<img th:src="@{/backoffice/images/user/1.png}" height="40" width="40" alt="">
+						<img th:src="@{'/uploads/' + ${userPicture}}" height="40" width="40" alt="">
 					</div>
 					<div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
 						<div class="dropdown-content-body">
@@ -188,7 +189,7 @@
 								<li>
 									<a href="javascript:void()">
 										<i class="icon-envelope-open"></i> <span>Inbox</span>
-										<div class="badge gradient-3 badge-pill gradient-1">3</div>
+										<div class="badge gradient-3 badge-pill gradient-1"></div>
 									</a>
 								</li>
 
@@ -197,7 +198,7 @@
 									<a href="page-lock.html"><i class="icon-lock"></i> <span>Lock
 											Screen</span></a>
 								</li>
-								<li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a>
+								<li><a th:href="@{/logout}"><i class="icon-key"></i> <span>Logout</span></a>
 								</li>
 							</ul>
 						</div>

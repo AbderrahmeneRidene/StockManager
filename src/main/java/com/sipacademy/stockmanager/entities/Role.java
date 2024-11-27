@@ -1,6 +1,7 @@
 package com.sipacademy.stockmanager.entities;
 
 import jakarta.persistence.Column;
+import org.springframework.security.core.GrantedAuthority;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "role")
-public class Role {
+public class Role implements GrantedAuthority {
     
 	@Override
 	public String toString() {
@@ -23,7 +24,7 @@ public class Role {
 	
     @Column(name = "role")
     private String role;
-    
+
     @Column(name = "nbrUsers")
     private int nbrUsers = 0;
     
@@ -54,4 +55,9 @@ public class Role {
 	public Role() {
 		super();
 	}
+	
+	@Override
+    public String getAuthority() {
+        return "ROLE_" + role;
+    }
 }
